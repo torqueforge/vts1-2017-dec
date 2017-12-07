@@ -20,44 +20,14 @@ end
 
 class BottleNumber
   def self.for(number)
-    registry.find {|candidate| candidate.handles?(number)}.new(number)
-
-    # @@registry.find {|candidate| candidate.handles?(number)}.new(number)
-
-    # [BottleNumber1, BottleNumber0, BottleNumber].find {|candidate| candidate.handles?(number)}.new(number)
-
-    # Hash.new(BottleNumber).merge(0 => BottleNumber0, 1 => BottleNumber1)[number].new(number)
-
-    # begin
-    #   const_get("BottleNumber#{number}")
-    # rescue NameError
-    #   BottleNumber
-    # end.new(number)
-
-    # case number
-    # when 0
-    #   BottleNumber0
-    # when 1
-    #   BottleNumber1
-    # else
-    #   BottleNumber
-    # end.new(number)
-  end
-
-  def self.handles?(number)
-    true
-  end
-
-  # def self.inherited(candidate)
-  #   register(candidate)
-  # end
-
-  def self.registry
-    @@registry ||= [BottleNumber]
-  end
-
-  def self.register(candidate)
-    registry.unshift(candidate)
+    case number
+    when 0
+      BottleNumber0
+    when 1
+      BottleNumber1
+    else
+      BottleNumber
+    end.new(number)
   end
 
   attr_reader :number
@@ -91,12 +61,6 @@ class BottleNumber
 end
 
 class BottleNumber0 < BottleNumber
-  register(self)
-
-  def self.handles?(number)
-    number == 0
-  end
-
   def quantity
     "no more"
   end
@@ -111,12 +75,6 @@ class BottleNumber0 < BottleNumber
 end
 
 class BottleNumber1 < BottleNumber
-  register(self)
-
-  def self.handles?(number)
-    number == 1
-  end
-
   def container
     "bottle"
   end
